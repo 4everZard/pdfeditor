@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.getfield{
+  height:841px;
+  width:595px;
+  overwirte:visible;
+}
+.div_input{
+ height:841px;
+ width:595px;
+ position:absolute;
+ top:0px;
+ left:0px;
+} 
+.inputfield{
+ /*  top:50px;
+  left:50px;
+  height:30px;
+  width:100px; */
+  padding:0;
+  margin:0;
+  border:none;
+  position:absolute;
+  opacity:0;
+}
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<img class="getfield" src=""/>
+	<div class="div_input">
+    </div>
+</body>
+
+
+
+
+
+<script>
+var img = new Image();
+img.src = "/ImageSample";
+img.onload = function(){
+  
+  imgHeight = img.height;
+  imgWidth = img.width;
+  
+/*   console.log("img width: "+imgWidth);
+  console.log("img height: "+imgHeight);
+ */
+}
+
+
+$(document).ready(function(){
+			$("img.getfield").attr("src",img.src);
+			$("img.getfield").on("load",function(e){
+				var wrapper         = $(".div_input");
+				var offsetX = this.offsetLeft;
+				var offsetY = this.offsetTop;
+				/* console.log("offset coord is: "+ offsetX + ", "+offsetY); */
+				 $.get("/pdf/fields", function(data){
+					 /* console.log(data); */
+					 
+					 for(i=0;i<data[0];i++){
+						 
+					 imgFieldX = offsetX + data[1+i*4]*imgWidth;
+					 /* console.log(imgFieldX); */
+					 imgFieldY = offsetY + data[2+i*4]*imgHeight;
+					 imgFieldWidth = imgWidth * data[3+i*4];
+					 imgFieldHeight = imgHeight *data[4+i*4];
+					 
+					 $(wrapper).append('<input class="inputfield" type="text"/>');
+					 var x = document.getElementsByClassName('inputfield');
+					 x[i].style.width = imgFieldWidth+"px";
+					 x[i].style.height = imgFieldHeight+"px"; 
+					 x[i].style.top = imgFieldY+"px";
+					 x[i].style.left = imgFieldX+"px";
+					 }         
+			      });
+			});
+			
+			$(".div_input").on("click",".inputfield",function(){
+				$(this).css('opacity','0.5');
+				
+				});
+			
+			$(".div_input").on("blur",".inputfield",function(){
+				$(this).css('opacity','0');
+				
+				});
+	});
+</script>
+</html>
