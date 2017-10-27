@@ -16,8 +16,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application {
 
 	public static void main(String[] args) throws InvalidPasswordException, IOException {
-		String pdfFilePath = "/home/developer/eclipse-workspace/pdfeditor/src/main/resources/pdfExample.pdf";
-		PdfToImage.PdfConverter(pdfFilePath);
+		//String pdfFilePath = "/home/developer/eclipse-workspace/pdfeditor/src/main/resources/pdfForm.pdf";
+		
+		pdfrenderer.PdfConverter(fileClass.sourcePdf,fileClass.destinationImg);
 	
         SpringApplication.run(Application.class, args);
     }

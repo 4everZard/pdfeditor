@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import zd.pdf.PdfField.PdfFieldData;
 import zd.pdf.PdfFormUtil;
+import zd.pdf.fileClass;
 
 
 @RestController
@@ -23,17 +24,24 @@ public class MyController<PdfField, PdfIterator>  {
 	@RequestMapping(value = "/ImageSample", method = RequestMethod.GET,  produces = MediaType.IMAGE_JPEG_VALUE)
 	public void getImage(HttpServletResponse response) throws IOException{
 
-		ClassPathResource imgFile = new ClassPathResource("image/ImageSample.jpg");
+		ClassPathResource imgFile = new ClassPathResource("pdfForm_1.jpg");
 		System.out.print(imgFile.getPath());
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 		StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
-
+		
+		
+		ClassPathResource imgFile2 = new ClassPathResource("pdfForm_2.jpg");
+		System.out.print(imgFile2.getPath());
+		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+		StreamUtils.copy(imgFile2.getInputStream(), response.getOutputStream());
+		
+		
 	}
 
 
 	@RequestMapping(value = "/pdf/fields", method = RequestMethod.GET)
 
 	public @ResponseBody List<PdfFieldData> getCoordinates(HttpServletResponse response) throws IOException{
-		return PdfFormUtil.PdfIterator("/home/developer/eclipse-workspace/pdfeditor/src/main/resources/pdfExample.pdf");
+		return PdfFormUtil.PdfIterator("/home/developer/eclipse-workspace/pdfeditor/src/main/resources/pdfForm.pdf");
 	}
 }
