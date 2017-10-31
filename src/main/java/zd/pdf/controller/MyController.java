@@ -27,12 +27,7 @@ public class MyController<PdfField, PdfIterator>  {
 		ClassPathResource imgFile = new ClassPathResource("pdfForm.jpg");
 		System.out.print(imgFile.getPath());
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-		StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
-		
-		
-	
-		
-		
+		StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());	
 	}
 
 
@@ -41,4 +36,8 @@ public class MyController<PdfField, PdfIterator>  {
 	public @ResponseBody List<PdfFieldData> getCoordinates(HttpServletResponse response) throws IOException{
 		return PdfFormUtil.PdfIterator("/home/developer/eclipse-workspace/pdfeditor/src/main/resources/pdfForm.pdf");
 	}
+	
+	//@RequestMapping(value = "/pdf/fields", method = RequestMethod.POST)
+	
+	
 }

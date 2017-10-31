@@ -56,10 +56,11 @@ public class PdfFormUtil<PdfField> {
     	Rectangle mediabox = reader.getPageSize(1);
     	int pageNumber = reader.getNumberOfPages();
     	float pdfWidth = mediabox.getWidth();
-    	float pdfHeight = mediabox.getHeight()*pageNumber;
-    	
+    	float pdfHeight = mediabox.getHeight();
+    	float pdfTotalHeight = mediabox.getHeight()*pageNumber;
     	//System.out.println(pdfWidth+" "+pdfHeight);
     	int fieldNums =0;
+    	System.out.println(pdfWidth+" "+pdfHeight+" "+pdfTotalHeight);
     	for (String fldName : fldNames) {
     		
     	
@@ -67,14 +68,18 @@ public class PdfFormUtil<PdfField> {
     		  List<FieldPosition> positions = fields.getFieldPositions(fldName);
     		  
     	      Rectangle rect = positions.get(0).position;
+    	      // get the page index of each data field
+    	      int page = positions.get(0).page;
+    	      
+    	      System.out.println(page);
     	      pdfFieldData.left   =  rect.getLeft();
-    	      pdfFieldData.top   = rect.getTop();
+    	      pdfFieldData.top   = rect.getTop()+(pageNumber-page)*pdfHeight;
     	      pdfFieldData.width = rect.getWidth();
     	      pdfFieldData.height =  rect.getHeight();
     	      float xPercentage = pdfFieldData.left / pdfWidth;
-    	      float yPercentage = 1-(pdfFieldData.top / pdfHeight);
+    	      float yPercentage = 1-(pdfFieldData.top / pdfTotalHeight);
     	      float widthPercentage = pdfFieldData.width / pdfWidth;
-    	      float heightPercentage = pdfFieldData.height / pdfHeight;
+    	      float heightPercentage = pdfFieldData.height / pdfTotalHeight;
     	      
     	      //list.add(pdfFieldData.left);
     	      //list.add(pdfFieldData.top);
@@ -86,11 +91,11 @@ public class PdfFormUtil<PdfField> {
     	      
     	      fieldNums++;
     	      
-    	      System.out.println( fldName + " "+fields.getFieldType(fldName)+" " +pdfFieldData.left+" "+ pdfFieldData.top+" "+pdfFieldData.width+" "+pdfFieldData.height);
-    		
+    	      System.out.println( fldName + " "+fields.getFieldType(fldName)+" " +xPercentage+" "+ yPercentage+" "+widthPercentage+" "+heightPercentage);
+    	      
     	}
     	list.add(0,fieldNums);
-    	System.out.println(list);
+    	
     	
 		return list;
     	
