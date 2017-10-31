@@ -9,12 +9,14 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.List;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.AcroFields.FieldPosition;
 import com.itextpdf.text.pdf.PdfFormField;
+import com.itextpdf.text.pdf.PdfPageLabels;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -39,21 +41,30 @@ public class PdfFormUtil<PdfField> {
     }
   
     
-    public static List<PdfFieldData> PdfIterator(String dest) throws IOException  {
+    public static List<PdfFieldData> PdfIterator(String dest) throws IOException {
     	String DEST = dest;
     	PdfReader reader = new PdfReader(DEST);
     	AcroFields fields = reader.getAcroFields();
+    	//edit
+ 
     	
+    	//
     	Set<String> fldNames = fields.getFields().keySet();
     	List list = new ArrayList();
     	PdfFieldData pdfFieldData = new PdfFieldData();
     	
     	Rectangle mediabox = reader.getPageSize(1);
+    	int pageNumber = reader.getNumberOfPages();
     	float pdfWidth = mediabox.getWidth();
-    	float pdfHeight = mediabox.getHeight();
+    	float pdfHeight = mediabox.getHeight()*pageNumber;
+    	
+    	//System.out.println(pdfWidth+" "+pdfHeight);
     	int fieldNums =0;
     	for (String fldName : fldNames) {
-    		List<FieldPosition> positions = fields.getFieldPositions(fldName);
+    		
+    	
+    		  //System.out.print(pageIndex);
+    		  List<FieldPosition> positions = fields.getFieldPositions(fldName);
     		  
     	      Rectangle rect = positions.get(0).position;
     	      pdfFieldData.left   =  rect.getLeft();
@@ -76,6 +87,7 @@ public class PdfFormUtil<PdfField> {
     	      fieldNums++;
     	      
     	      System.out.println( fldName + " "+fields.getFieldType(fldName)+" " +pdfFieldData.left+" "+ pdfFieldData.top+" "+pdfFieldData.width+" "+pdfFieldData.height);
+    		
     	}
     	list.add(0,fieldNums);
     	System.out.println(list);
