@@ -1,7 +1,6 @@
 package zd.pdf.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,9 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import zd.pdf.PdfField.PdfFieldData;
 import zd.pdf.PdfFormUtil;
-import zd.pdf.fileClass;
+import zd.pdf.fieldData;
 
 
 @RestController
@@ -33,7 +31,7 @@ public class MyController<PdfField, PdfIterator>  {
 
 	@RequestMapping(value = "/pdf/fields", method = RequestMethod.GET)
 
-	public @ResponseBody List<PdfFieldData> getCoordinates(HttpServletResponse response) throws IOException{
+	public @ResponseBody fieldData[] getCoordinates(HttpServletResponse response) throws IOException{
 		return PdfFormUtil.PdfIterator("/home/developer/eclipse-workspace/pdfeditor/src/main/resources/pdfForm.pdf");
 	}
 	
