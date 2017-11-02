@@ -8,13 +8,15 @@
   height:px;
   width:px;
   overwirte:visible;
+  
 }
 .div_input{
  height:4752px;
- width:612px;
+ width:1200px;
  position:absolute;
  top:0px;
  left:0px;
+ 
 } 
 .inputfield{
  /*  top:50px;
@@ -27,13 +29,20 @@
   position:absolute;
   opacity:0;
 }
+.button{
+	 z-index: 999;
+	 height: 50px;
+	 width:100px;
+
+}
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
+	
 	<img class="getfield" src=""/>
-	<div class="div_input">  </div>
+	<div class="div_input">  <button class="button" type="button">Save</button> </div>
 </body>
 <script>
 var img = new Image();
@@ -43,7 +52,7 @@ img.onload = function(){
   imgHeight = img.height;
   imgWidth = img.width;
   
-/*   console.log("img width: "+imgWidth);
+/*   console.log("img width: "+imgWidth);ff
   console.log("img height: "+imgHeight);
  */
 }
@@ -55,10 +64,11 @@ $(document).ready(function(){
 				var wrapper         = $(".div_input");
 				var offsetX = this.offsetLeft;
 				var offsetY = this.offsetTop;
-				/* console.log("offset coord is: "+ offsetX + ", "+offsetY); */
+				
+	
 				 $.get("/pdf/fields", function(data){
 					 /* console.log(data); */
-					 console.log(data);
+					 
 					 for(i=1;i<data.length;i++){
 					 
 					 imgFieldX = offsetX + data[i].xpercent*imgWidth;
@@ -76,10 +86,36 @@ $(document).ready(function(){
 					 x[i-1].style.height = imgFieldHeight+"px"; 
 					 x[i-1].style.top = imgFieldY+"px";
 					 x[i-1].style.left = imgFieldX+"px";
-					 
-					 }         
+					
+					 }
+
 			      });
 			});
+			
+		
+			var input;
+			var myJson;
+			$(".button").click(function(){
+		    	var input = $(".inputfield").val();
+				GetText();	
+				$.ajax({
+					url:"/pdf/fields",
+					data:myJson,
+					type:"POST",
+					success:function(data){
+						alert(data);
+					}
+				})
+			});
+			
+			function GetText() {
+				$(".inputfield").each(function () {
+					input = $(this).val();
+					myJson = JSON.stringify(input);
+					
+				});
+			}
+	
 			
 			$(".div_input").on("click",".inputfield",function(){
 				$(this).css('opacity','0.5');
@@ -87,9 +123,11 @@ $(document).ready(function(){
 				});
 			
 			$(".div_input").on("blur",".inputfield",function(){
-				$(this).css('opacity','0');
+				$(this).css('opacity','1');
 				
 				});
+			
+			
 	});
 </script>
 </html>

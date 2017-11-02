@@ -27,7 +27,7 @@ public class PdfFormUtil<PdfField> {
     }
   
     
-    public static  fieldData[] PdfIterator(String dest) throws IOException {
+    public static  FieldData[] PdfIterator(String dest) throws IOException {
     	String DEST = dest;
     	PdfReader reader = new PdfReader(DEST);
     	AcroFields fields = reader.getAcroFields();
@@ -44,7 +44,7 @@ public class PdfFormUtil<PdfField> {
     	float pdfWidth = mediabox.getWidth();
     	float pdfHeight = mediabox.getHeight();
     	float pdfTotalHeight = mediabox.getHeight()*pageNumber;
-    	System.out.println(pdfWidth+" "+pdfHeight+" "+pdfTotalHeight);
+    	//System.out.println(pdfWidth+" "+pdfHeight+" "+pdfTotalHeight);
     	//System.out.println(pdfWidth+" "+pdfHeight);
     	
     	
@@ -53,13 +53,13 @@ public class PdfFormUtil<PdfField> {
     		fieldNums++;
     	}
     	//System.out.println(fieldNums);
-    	fieldData[] FieldData = new fieldData[fieldNums];
+    	FieldData[] FieldData = new FieldData[fieldNums];
     	
     	
     	fieldNums = 0;
     	for (String fldName : fldNames) {
     		  fieldNums++;
-    		  FieldData[fieldNums] = new fieldData();
+    		  FieldData[fieldNums] = new FieldData();
     	
     		  //System.out.print(pageIndex);
     		  List<FieldPosition> positions = fields.getFieldPositions(fldName);
@@ -68,7 +68,7 @@ public class PdfFormUtil<PdfField> {
     	      // get the page index of each data field
     	      int page = positions.get(0).page;
     	      
-    	      System.out.println(page);
+    	      //System.out.println(page);
     	      FieldData[fieldNums].name = fldName;
     	      FieldData[fieldNums].left =  rect.getLeft();
     	      FieldData[fieldNums].top  = rect.getTop()+(pageNumber-page)*pdfHeight;
@@ -93,7 +93,7 @@ public class PdfFormUtil<PdfField> {
     	      //System.out.println( fldName + " "+fields.getFieldType(fldName)+" " +xPercentage+" "+ yPercentage+" "+widthPercentage+" "+heightPercentage);
     	      
     	}
-    	System.out.println(Arrays.toString(FieldData));
+    	//System.out.println(Arrays.toString(FieldData));
     	//list.add(0,fieldNums);
 		return FieldData;
     	

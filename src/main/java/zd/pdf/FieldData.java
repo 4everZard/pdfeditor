@@ -2,7 +2,7 @@ package zd.pdf;
 
 
 	
-	public class fieldData{
+	public class FieldData{
 	float left;
 	float top;
 	float width;
@@ -11,8 +11,9 @@ package zd.pdf;
 	float yPercentage;
 	float widthPercentage;
 	float heightPercentage;
+	
 	String name;
-
+	String text;
 	
 	public float getLeft() {
 		return left;
@@ -40,6 +41,9 @@ package zd.pdf;
 	}
 	public float getHeightPercent() {
 		return heightPercentage;
+	}
+	public String getText() {
+		return text;
 	}
 	
 	@Override
