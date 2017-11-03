@@ -31,44 +31,25 @@ public class PdfFormUtil<PdfField> {
     	String DEST = dest;
     	PdfReader reader = new PdfReader(DEST);
     	AcroFields fields = reader.getAcroFields();
-    	//edit
- 
-    	
-    	//
     	Set<String> fldNames = fields.getFields().keySet();
-    	//List list = new ArrayList();
-    	
-    	
     	Rectangle mediabox = reader.getPageSize(1);
     	int pageNumber = reader.getNumberOfPages();
     	float pdfWidth = mediabox.getWidth();
     	float pdfHeight = mediabox.getHeight();
     	float pdfTotalHeight = mediabox.getHeight()*pageNumber;
-    	//System.out.println(pdfWidth+" "+pdfHeight+" "+pdfTotalHeight);
-    	//System.out.println(pdfWidth+" "+pdfHeight);
-    	
-    	
     	int fieldNums =1;
     	for(String fldName : fldNames) {
     		fieldNums++;
     	}
-    	//System.out.println(fieldNums);
     	FieldData[] FieldData = new FieldData[fieldNums];
-    	
-    	
     	fieldNums = 0;
     	for (String fldName : fldNames) {
     		  fieldNums++;
     		  FieldData[fieldNums] = new FieldData();
-    	
-    		  //System.out.print(pageIndex);
-    		  List<FieldPosition> positions = fields.getFieldPositions(fldName);
-    		  
+    		  List<FieldPosition> positions = fields.getFieldPositions(fldName);  
     	      Rectangle rect = positions.get(0).position;
-    	      // get the page index of each data field
     	      int page = positions.get(0).page;
-    	      
-    	      //System.out.println(page);
+    	      FieldData[fieldNums].value ="";
     	      FieldData[fieldNums].name = fldName;
     	      FieldData[fieldNums].left =  rect.getLeft();
     	      FieldData[fieldNums].top  = rect.getTop()+(pageNumber-page)*pdfHeight;
@@ -78,9 +59,11 @@ public class PdfFormUtil<PdfField> {
     	      FieldData[fieldNums].yPercentage = 1-(FieldData[fieldNums].top / pdfTotalHeight);
     	      FieldData[fieldNums].widthPercentage = rect.getWidth() / pdfWidth;
     	      FieldData[fieldNums].heightPercentage = rect.getHeight() / pdfTotalHeight;
-
+    	      
     	}
 		return FieldData;
     }
+    
+
 }
     

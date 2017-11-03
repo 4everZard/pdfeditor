@@ -80,7 +80,7 @@ $(document).ready(function(){
 					
 					 imgFieldHeight = imgHeight *data[i].heightPercent;
 					 
-					 $(wrapper).append('<input class="inputfield" name ="' + data[i].name + '" type="text"/>');
+					 $(wrapper).append('<input class="inputfield" name ="' + data[i].name + '"  value ="' + data[i].value + '" type="text"/>');
 					 var x = document.getElementsByClassName('inputfield');
 					 x[i-1].style.width = imgFieldWidth+"px";
 					 x[i-1].style.height = imgFieldHeight+"px"; 
@@ -118,8 +118,10 @@ function GetText() {
 	 $(".inputfield").each(function () {
 		input = $(this).val();
 		myJson.push({
+			
 			"name": $(this).attr("name"),
 			"value": input
+			
 		});
 		console.log(myJson["name"],myJson["value"]);
 	});

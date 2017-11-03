@@ -11,6 +11,7 @@ package zd.pdf;
 	float yPercentage;
 	float widthPercentage;
 	float heightPercentage;
+
 	
 	String name;
 	String text;
@@ -49,6 +50,7 @@ package zd.pdf;
 	public String getValue() {
 		return value;
 	}
+
 	
 	@Override
 	public String toString() {
