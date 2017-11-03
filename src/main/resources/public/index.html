@@ -42,7 +42,7 @@
 <body>
 	
 	<img class="getfield" src=""/>
-	<div class="div_input">  <button class="button" type="button">Save</button> </div>
+	<div class="div_input">  <button class="button"  onclick="GetText()">Save</button> </div>
 </body>
 <script>
 var img = new Image();
@@ -80,7 +80,7 @@ $(document).ready(function(){
 					
 					 imgFieldHeight = imgHeight *data[i].heightPercent;
 					 
-					 $(wrapper).append('<input class="inputfield" type="text"/>');
+					 $(wrapper).append('<input class="inputfield" name ="' + data[i].name + '" type="text"/>');
 					 var x = document.getElementsByClassName('inputfield');
 					 x[i-1].style.width = imgFieldWidth+"px";
 					 x[i-1].style.height = imgFieldHeight+"px"; 
@@ -91,30 +91,9 @@ $(document).ready(function(){
 
 			      });
 			});
-			
 		
-			var input;
-			var myJson;
-			$(".button").click(function(){
-		    	var input = $(".inputfield").val();
-				GetText();	
-				$.ajax({
-					url:"/pdf/fields",
-					data:myJson,
-					type:"POST",
-					success:function(data){
-						alert(data);
-					}
-				})
-			});
 			
-			function GetText() {
-				$(".inputfield").each(function () {
-					input = $(this).val();
-					myJson = JSON.stringify(input);
-					
-				});
-			}
+			
 	
 			
 			$(".div_input").on("click",".inputfield",function(){
@@ -129,5 +108,35 @@ $(document).ready(function(){
 			
 			
 	});
+
+	
+function GetText() {
+	var input;
+	var myJson = [];
+	
+	
+	 $(".inputfield").each(function () {
+		input = $(this).val();
+		myJson.push({
+			"name": $(this).attr("name"),
+			"value": input
+		});
+		console.log(myJson["name"],myJson["value"]);
+	});
+
+	$.ajax({
+		url:"/pdf/fields",
+		type:"POST",
+		data: JSON.stringify(myJson),
+		dataType:"json",
+		
+		contentType : 'application/json; charset=utf-8',
+		success:function(data){
+			
+			alert("123!");
+		}
+	});
+	
+}
 </script>
 </html>

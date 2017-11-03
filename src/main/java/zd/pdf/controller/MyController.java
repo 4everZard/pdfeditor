@@ -3,6 +3,7 @@ package zd.pdf.controller;
 import java.io.IOException;
 import java.util.Arrays;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.core.io.ClassPathResource;
@@ -38,12 +39,14 @@ public class MyController<PdfField, PdfIterator>  {
 	public @ResponseBody FieldData[] getCoordinates(HttpServletResponse response) throws IOException{
 		return PdfFormUtil.PdfIterator("/home/developer/eclipse-workspace/pdfeditor/src/main/resources/pdfForm.pdf");
 	}
-	;
-	@RequestMapping(value = "/pdf/fields", method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
 	
-    public void saveFields(@RequestBody FieldData fieldData[]) throws IOException{
-		
-		System.out.println(Arrays.toString(fieldData));
+	
+	@RequestMapping(value="/pdf/fields",method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+
+	
+    public void saveFields(@RequestBody FieldData fieldData[], HttpServletRequest request) throws IOException{
+		String value = fieldData[1].getValue();
+		System.out.println(value);
 	}
 }

@@ -14,6 +14,7 @@ package zd.pdf;
 	
 	String name;
 	String text;
+	String value;
 	
 	public float getLeft() {
 		return left;
@@ -44,6 +45,9 @@ package zd.pdf;
 	}
 	public String getText() {
 		return text;
+	}
+	public String getValue() {
+		return value;
 	}
 	
 	@Override

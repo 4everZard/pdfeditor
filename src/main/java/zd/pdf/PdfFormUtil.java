@@ -78,35 +78,9 @@ public class PdfFormUtil<PdfField> {
     	      FieldData[fieldNums].yPercentage = 1-(FieldData[fieldNums].top / pdfTotalHeight);
     	      FieldData[fieldNums].widthPercentage = rect.getWidth() / pdfWidth;
     	      FieldData[fieldNums].heightPercentage = rect.getHeight() / pdfTotalHeight;
-    	      
-    	   
-    	      //list.add(FieldData.left);
-    	      //list.add(FieldData.top);
-    	     
-//    	      list.add(xPercentage);
-//    	      list.add(yPercentage);
-//    	      list.add(widthPercentage);
-//    	      list.add(heightPercentage);
-    	      
-    	      
-    	      
-    	      //System.out.println( fldName + " "+fields.getFieldType(fldName)+" " +xPercentage+" "+ yPercentage+" "+widthPercentage+" "+heightPercentage);
-    	      
-    	}
-    	//System.out.println(Arrays.toString(FieldData));
-    	//list.add(0,fieldNums);
-		return FieldData;
-    	
-    	
 
-    	
-    	
-    	
+    	}
+		return FieldData;
     }
-    
-    
-    
-    
-    
 }
     
