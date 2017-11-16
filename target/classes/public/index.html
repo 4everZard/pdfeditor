@@ -17,6 +17,7 @@
  top:0px;
  left:0px;
  
+
 } 
 .inputfield{
  /*  top:50px;
@@ -25,16 +26,35 @@
   width:100px; */
   padding:0;
   margin:0;
-  border:none;
+  border:none;            
   position:absolute;
   opacity:0;
+
 }
+.checkbox{
+  padding:0;
+  margin:0;
+  border:none;            
+  position:absolute;
+  opacity:1;
+
+}
+
+
 .button{
 	 z-index: 999;
 	 height: 50px;
 	 width:100px;
 
 }
+
+
+/* input::-webkit-calendar-picker-indicator {
+	opacity: 100;
+} */
+
+
+
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -47,15 +67,7 @@
 <script>
 var img = new Image();
 img.src = "/ImageSample";
-img.onload = function(){
-  
-  imgHeight = img.height;
-  imgWidth = img.width;
-  
-/*   console.log("img width: "+imgWidth);ff
-  console.log("img height: "+imgHeight);
- */
-}
+
 
 
 $(document).ready(function(){
@@ -65,50 +77,90 @@ $(document).ready(function(){
 				var offsetX = this.offsetLeft;
 				var offsetY = this.offsetTop;
 				
-	
+				  imgHeight = img.height;
+				  imgWidth = img.width;
+				  
 				 $.get("/pdf/fields", function(data){
-					 /* console.log(data); */
-					 
-					 for(i=1;i<data.length;i++){
-					 
-					 imgFieldX = offsetX + data[i].xpercent*imgWidth;
-					 //console.log(imgFieldX);
-					 /* console.log(imgFieldX); */
-					 imgFieldY = offsetY + data[i].ypercent*imgHeight;
-					 
-					 imgFieldWidth = imgWidth * data[i].widthPercent;
 					
-					 imgFieldHeight = imgHeight *data[i].heightPercent;
-					 
-					 $(wrapper).append('<input class="inputfield" name ="' + data[i].name + '"  value ="' + data[i].value + '" type="text"/>');
-					 var x = document.getElementsByClassName('inputfield');
-					 x[i-1].style.width = imgFieldWidth+"px";
-					 x[i-1].style.height = imgFieldHeight+"px"; 
-					 x[i-1].style.top = imgFieldY+"px";
-					 x[i-1].style.left = imgFieldX+"px";
-					
-					 }
+					 for(var i=0;i<data.length;i++){
+						 console.log(data[i][0].fieldType);
+						 var size = data[i][0].size;
+						 var type = data[i][0].fieldType;
+						
+						 
+					 	 if(size == 1 && (type == 4 || type ==7)  ){ 
+					 		 var imgFieldX = offsetX + data[i][0].xpercent*imgWidth;
+							 //console.log(imgFieldX);
+							 /* console.log(imgFieldX); */
+							 var imgFieldY = offsetY + data[i][0].ypercent*imgHeight;
+							 
+							 var imgFieldWidth = imgWidth * data[i][0].widthPercent;
+							
+							 var imgFieldHeight = imgHeight * data[i][0].heightPercent;
+					 		
+							/* console.log("text"); */
+							/* $(wrapper).append('<input class="inputfield" list="field"  name ="' + data[i].name + '"  value ="' + data[i].value + '"  type="text"/>'); */
+						 	var x = $('<input class="inputfield" list="field"  name ="' + data[i][0].name + '"  value ="' + data[i][0].value + '"  type="text"/>');
+						 	$(wrapper).append(x);					 	
+						 	x.css({
+						 		width:imgFieldWidth,
+						 		height:imgFieldHeight,
+						 		top:imgFieldY,
+						 		left:imgFieldX						 		
+						 	});						
+					 	 }		 
+					   	  else if(size > 1 && type ==2){
+					   		for(var j=0;j<size;j++){
+					   		 	imgFieldX = offsetX + data[i][j].xpercent*imgWidth;
+							 	//console.log(imgFieldX);
+								 /* console.log(imgFieldX); */
+								 imgFieldY = offsetY + data[i][j].ypercent*imgHeight;
+							 
+								 imgFieldWidth = imgWidth * data[i][j].widthPercent;
+								
+								 imgFieldHeight = imgHeight * data[i][j].heightPercent;
+					  			console.log("checkbox");					
+								var x = $('<input class="checkbox" type="checkbox"  name ="' + data[i][j].name + '"  value ="' + data[i][j].value + '" />');
+						 		$(wrapper).append(x);						 	
+						 		x.css({
+						 			width:imgFieldWidth,
+						 			height:imgFieldHeight,
+						 			top:imgFieldY,
+						 			left:imgFieldX
+						 		
+						 		});
+					   		}
+					 	}    
+					} 
 
 			      });
 			});
-		
 			
+			$(".div_input").append('<datalist id="field"> </datalist>');
+			/*  $(".inputfield").css({ 
+				 '-webkit-calendar-picker-indicator':'opacity(1)'
+			 }) */
+			 //
+			 $("#field").append('<option value="chrome" class="dropdownlist"></option>');
+			 $("#field").append(	'<option value="firefox"></option>');
+			 //
 			
-	
+	 
 			
-			$(".div_input").on("click",".inputfield",function(){
+		 	$(".div_input").on("click",".inputfield",function(){
 				$(this).css('opacity','0.5');
-				
+				 
 				});
 			
 			$(".div_input").on("blur",".inputfield",function(){
 				$(this).css('opacity','1');
 				
-				});
+				}); 
 			
 			
 	});
 
+	
 	
 function GetText() {
 	var input;

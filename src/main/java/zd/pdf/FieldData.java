@@ -11,11 +11,14 @@ package zd.pdf;
 	float yPercentage;
 	float widthPercentage;
 	float heightPercentage;
-
+	
 	
 	String name;
-	String text;
-	String value;
+	//String text;
+	String value;               // text in the textfield
+	String fieldName;
+	int fieldType;
+	int size;                   // number of elements in the datafield 
 	
 	public float getLeft() {
 		return left;
@@ -44,14 +47,23 @@ package zd.pdf;
 	public float getHeightPercent() {
 		return heightPercentage;
 	}
-	public String getText() {
+	/*public String getText() {
 		return text;
-	}
+	}*/
 	public String getValue() {
 		return value;
 	}
-
+	public int getFieldType() {
+		return fieldType;
+	}
+	// 2 represents for checkbox; 4 represents for text field; 7 represents for signature field
+	public String getFieldName() {
+		return fieldName;
+	}
 	
+	public int getSize() {
+		return size;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
