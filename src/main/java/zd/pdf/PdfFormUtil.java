@@ -12,6 +12,8 @@ import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.AcroFields.FieldPosition;
 import com.itextpdf.text.pdf.PdfReader;
 
+import zd.pdf.FieldData.position;
+
 public class PdfFormUtil<PdfField> {
 	
    // public static final String SRC = "/home/developer/Downloads/PDFform.pdf";    // set location for source pdf 
@@ -27,7 +29,7 @@ public class PdfFormUtil<PdfField> {
     }
   
     
-    public static  FieldData[][] PdfIterator(String dest) throws IOException {
+    public static  FieldData[] PdfIterator(String dest) throws IOException {
     	String DEST = dest;
     	PdfReader reader = new PdfReader(DEST);
     	AcroFields fields = reader.getAcroFields();
@@ -41,11 +43,11 @@ public class PdfFormUtil<PdfField> {
     	
     	int fieldNums = fldNames.size();
     	
-    	FieldData[][] FieldData = new FieldData[fieldNums][14];
+    	FieldData[] FieldData = new FieldData[fieldNums];
     	for(int x=0;x<fldNames.size();x++) {
-    		for(int y=0;y<14;y++) {
-    			FieldData[x][y] = new FieldData();
-    		}
+    	
+    			FieldData[x] = new FieldData();
+    		
     	}
     	
     	
@@ -64,73 +66,36 @@ public class PdfFormUtil<PdfField> {
     		  Rectangle[] rect = new Rectangle[size];
     		  
     		  
-    		  
-    			  for (int j=0;j<size;j++) {
+    		  FieldData[fieldNums-1].size = size;
+    		  FieldData[fieldNums-1].value ="";             
+			  FieldData[fieldNums-1].name = fldName;
+			  FieldData[fieldNums-1].fieldType = fields.getFieldType(fldName);   	        	      
+			  FieldData[fieldNums-1].fieldName =""; 
+			  FieldData[fieldNums-1].isChecked=false;
+			  FieldData[fieldNums-1].positions = new position[14];
+			  for(int i=0;i<14;i++) {
+				  FieldData[fieldNums-1].positions[i] = new position();
+			  }
+			  for (int j=0;j<size;j++) {
     	    		  System.out.println("fieldNums is: "+fieldNums);
 
-    	    		  FieldData[fieldNums-1][j].size = size;
+    	    		 
     				  rect[j] = positions.get(j).position;
     				  int page = positions.get(0).page;
-        			  FieldData[fieldNums-1][j].value ="";             
-        			  FieldData[fieldNums-1][j].name = fldName;
-        			  FieldData[fieldNums-1][j].left =  rect[j].getLeft();
-        			  FieldData[fieldNums-1][j].top  = rect[j].getTop()+(pageNumber-page)*pdfHeight;
-        			  FieldData[fieldNums-1][j].width = rect[j].getWidth();
-        			  FieldData[fieldNums-1][j].height =  rect[j].getHeight();
-        			  FieldData[fieldNums-1][j].xPercentage = rect[j].getLeft() / pdfWidth;
-        			  FieldData[fieldNums-1][j].yPercentage = 1-(FieldData[fieldNums-1][j].top / pdfTotalHeight);
-        			  FieldData[fieldNums-1][j].widthPercentage = rect[j].getWidth() / pdfWidth;
-        			  FieldData[fieldNums-1][j].heightPercentage = rect[j].getHeight() / pdfTotalHeight;
-        			  FieldData[fieldNums-1][j].fieldType = fields.getFieldType(fldName);   	        	      
-        			  FieldData[fieldNums-1][j].fieldName =""; 
-    				  
-    			  } 
-    			
-    			  
+        			 
+        			  FieldData[fieldNums-1].positions[j].left =  rect[j].getLeft();
+        			  FieldData[fieldNums-1].positions[j].top  = rect[j].getTop()+(pageNumber-page)*pdfHeight;
+        			  FieldData[fieldNums-1].positions[j].width = rect[j].getWidth();
+        			  FieldData[fieldNums-1].positions[j].height =  rect[j].getHeight();
+        			  FieldData[fieldNums-1].positions[j].xPercentage = rect[j].getLeft() / pdfWidth;
+        			  FieldData[fieldNums-1].positions[j].yPercentage = 1-(FieldData[fieldNums-1].positions[j].top / pdfTotalHeight);
+        			  FieldData[fieldNums-1].positions[j].widthPercentage = rect[j].getWidth() / pdfWidth;
+        			  FieldData[fieldNums-1].positions[j].heightPercentage = rect[j].getHeight() / pdfTotalHeight;
+ 			  } 
+	  
     	}
 		return FieldData;
     }
 }
 
-
-
-/*  switch(size) {
-	case 1:
-	  Rectangle rect = positions.get(size-1).position;
-  int page = positions.get(0).page;
-  FieldData[fieldNums].size = positions.size();
-  
-  FieldData[fieldNums].value ="";             
-  FieldData[fieldNums].name = fldName;
-  FieldData[fieldNums].left =  rect.getLeft();
-  FieldData[fieldNums].top  = rect.getTop()+(pageNumber-page)*pdfHeight;
-  FieldData[fieldNums].width = rect.getWidth();
-  FieldData[fieldNums].height =  rect.getHeight();
-  FieldData[fieldNums].xPercentage = rect.getLeft() / pdfWidth;
-  FieldData[fieldNums].yPercentage = 1-(FieldData[fieldNums].top / pdfTotalHeight);
-  FieldData[fieldNums].widthPercentage = rect.getWidth() / pdfWidth;
-  FieldData[fieldNums].heightPercentage = rect.getHeight() / pdfTotalHeight;
-  FieldData[fieldNums].fieldType = fields.getFieldType(fldName);   	        	      
-  FieldData[fieldNums].fieldName ="";   		  	
-	break;
-	
-	case 2:
-		
-	
-	break;
-	
-	case 3:
-		
-	break;
-	
-	case 4:
-		
-	break;
-	
-	case 5:
-		
-	break;
-
-
-}*/
     

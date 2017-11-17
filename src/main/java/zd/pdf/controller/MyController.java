@@ -51,7 +51,7 @@ public class MyController<PdfField, PdfIterator>  {
 
 	@RequestMapping(value = "/pdf/fields", method = RequestMethod.GET)
 
-	public @ResponseBody FieldData[][] getCoordinates(HttpServletResponse response) throws IOException{
+	public @ResponseBody FieldData[] getCoordinates(HttpServletResponse response) throws IOException{
 		return PdfFormUtil.PdfIterator("/home/developer/eclipse-workspace/pdfeditor/src/main/resources/pdfForm.pdf");
 	}
 	
@@ -67,16 +67,18 @@ public class MyController<PdfField, PdfIterator>  {
     	AcroFields fields = stamper.getAcroFields();
     
 		
-    	for(int i=1;i<494;i++) {
-		String value = fieldData[i].getValue();
-		String name = fieldData[i].getName();
-    	if(value != null) {
-		fields.setField(name,value);
-    	stamper.setFormFlattening(true);
-    	}
-		System.out.println(value);
-		System.out.println(name);
-		
+    	for(int i=0;i<fieldData.length;i++) {
+    		
+    			String value = fieldData[i].getValue();
+    			String name = fieldData[i].getName();
+    			int type = fieldData[i].getFieldType();
+    			if(value != null && (type ==4 || type == 2)) {
+	    			fields.setField(name,value);
+	    			stamper.setFormFlattening(true);
+	    		}
+    			System.out.println(value);
+    			System.out.println(name);
+    		
     	}
     	stamper.close();
     	reader.close();

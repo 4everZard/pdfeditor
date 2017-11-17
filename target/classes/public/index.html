@@ -28,17 +28,17 @@
   margin:0;
   border:none;            
   position:absolute;
-  opacity:0;
+  opacity:1;
 
 }
-.checkbox{
+/* .checkbox{
   padding:0;
   margin:0;
   border:none;            
   position:absolute;
   opacity:1;
 
-}
+} */
 
 
 .button{
@@ -81,26 +81,26 @@ $(document).ready(function(){
 				  imgWidth = img.width;
 				  
 				 $.get("/pdf/fields", function(data){
-					
+					 console.log(data);
 					 for(var i=0;i<data.length;i++){
-						 console.log(data[i][0].fieldType);
-						 var size = data[i][0].size;
-						 var type = data[i][0].fieldType;
+						 
+						 var size = data[i].size;
+						 var type = data[i].fieldType;
 						
 						 
 					 	 if(size == 1 && (type == 4 || type ==7)  ){ 
-					 		 var imgFieldX = offsetX + data[i][0].xpercent*imgWidth;
+					 		 var imgFieldX = offsetX + data[i].positions[0].xpercent*imgWidth;
 							 //console.log(imgFieldX);
 							 /* console.log(imgFieldX); */
-							 var imgFieldY = offsetY + data[i][0].ypercent*imgHeight;
+							 var imgFieldY = offsetY + data[i].positions[0].ypercent*imgHeight;
 							 
-							 var imgFieldWidth = imgWidth * data[i][0].widthPercent;
+							 var imgFieldWidth = imgWidth * data[i].positions[0].widthPercent;
 							
-							 var imgFieldHeight = imgHeight * data[i][0].heightPercent;
+							 var imgFieldHeight = imgHeight * data[i].positions[0].heightPercent;
 					 		
 							/* console.log("text"); */
 							/* $(wrapper).append('<input class="inputfield" list="field"  name ="' + data[i].name + '"  value ="' + data[i].value + '"  type="text"/>'); */
-						 	var x = $('<input class="inputfield" list="field"  name ="' + data[i][0].name + '"  value ="' + data[i][0].value + '"  type="text"/>');
+						 	var x = $('<input class="inputfield" list="field"  fieldType ="' + data[i].fieldType + '" name ="' + data[i].name + '"  value ="' + data[i].value + '"  type="text"/>');
 						 	$(wrapper).append(x);					 	
 						 	x.css({
 						 		width:imgFieldWidth,
@@ -111,16 +111,16 @@ $(document).ready(function(){
 					 	 }		 
 					   	  else if(size > 1 && type ==2){
 					   		for(var j=0;j<size;j++){
-					   		 	imgFieldX = offsetX + data[i][j].xpercent*imgWidth;
+					   		 	imgFieldX = offsetX + data[i].positions[j].xpercent*imgWidth;
 							 	//console.log(imgFieldX);
 								 /* console.log(imgFieldX); */
-								 imgFieldY = offsetY + data[i][j].ypercent*imgHeight;
+								 imgFieldY = offsetY + data[i].positions[j].ypercent*imgHeight;
 							 
-								 imgFieldWidth = imgWidth * data[i][j].widthPercent;
+								 imgFieldWidth = imgWidth * data[i].positions[j].widthPercent;
 								
-								 imgFieldHeight = imgHeight * data[i][j].heightPercent;
-					  			console.log("checkbox");					
-								var x = $('<input class="checkbox" type="checkbox"  name ="' + data[i][j].name + '"  value ="' + data[i][j].value + '" />');
+								 imgFieldHeight = imgHeight * data[i].positions[j].heightPercent;
+					  								
+								var x = $('<input class="inputfield" type="checkbox" isChecked ="' + data[i].isChecked + '" fieldType ="' + data[i].fieldType + '" name ="' + data[i].name + '"  value ="' + data[i].value + '" />');
 						 		$(wrapper).append(x);						 	
 						 		x.css({
 						 			width:imgFieldWidth,
@@ -165,17 +165,24 @@ $(document).ready(function(){
 function GetText() {
 	var input;
 	var myJson = [];
-	
+	var type;
 	
 	 $(".inputfield").each(function () {
 		input = $(this).val();
+		type = $(this).attr("fieldType");
+		if($(this).prop('checked') == true){
+			
+		}
+		else if($(this).prop('checked') == false){
+			//console.log("unchecked");
+		}
 		myJson.push({
 			
+			"type": $(this).attr("fieldType"),
 			"name": $(this).attr("name"),
 			"value": input
 			
-		});
-		console.log(myJson["name"],myJson["value"]);
+		});		
 	});
 
 	$.ajax({
