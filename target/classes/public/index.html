@@ -92,11 +92,11 @@ $(document).ready(function(){
 					 		 var imgFieldX = offsetX + data[i].positions[0].xpercent*imgWidth;
 							 //console.log(imgFieldX);
 							 /* console.log(imgFieldX); */
-							 var imgFieldY = offsetY + data[i].positions[0].ypercent*imgHeight;
+							 var imgFieldY = offsetY + data[i].positions[0].ypercent*imgHeight+3;
 							 
-							 var imgFieldWidth = imgWidth * data[i].positions[0].widthPercent;
+							 var imgFieldWidth = imgWidth * data[i].positions[0].widthPercent-6;
 							
-							 var imgFieldHeight = imgHeight * data[i].positions[0].heightPercent;
+							 var imgFieldHeight = imgHeight * data[i].positions[0].heightPercent-4;
 					 		
 							/* console.log("text"); */
 							/* $(wrapper).append('<input class="inputfield" list="field"  name ="' + data[i].name + '"  value ="' + data[i].value + '"  type="text"/>'); */
@@ -142,47 +142,44 @@ $(document).ready(function(){
 			 }) */
 			 //
 			 $("#field").append('<option value="chrome" class="dropdownlist"></option>');
-			 $("#field").append(	'<option value="firefox"></option>');
-			 //
-			
-	 
-			
-		 	$(".div_input").on("click",".inputfield",function(){
-				$(this).css('opacity','0.5');
-				 
-				});
-			
-			$(".div_input").on("blur",".inputfield",function(){
-				$(this).css('opacity','1');
-				
-				}); 
-			
-			
+			 $("#field").append('<option value="firefox"></option>');
+			 //		
 	});
 
-	
-	
 function GetText() {
-	var input;
-	var myJson = [];
-	var type;
+
 	
 	 $(".inputfield").each(function () {
+		  var data = new Object();
+		  data["name"] = $(this).attr("name");
+		  data["type"] = $(this).attr("fieldType");
+		  data["value"] = $(this).val();
+		  data["checkstatus"] = $(this).prop("checked");
+		  myJson.push(data);
+		/* 
+		var input;
+		var myJson = [];
+		var type;
+		var checkstatus;
 		input = $(this).val();
 		type = $(this).attr("fieldType");
-		if($(this).prop('checked') == true){
-			
+		checkstatus = $(this).prop("checked");
+	 	console.log(type);
+	    if($(this).prop('checked') == true){
+			$(this).isChecked = true;
 		}
 		else if($(this).prop('checked') == false){
-			//console.log("unchecked");
-		}
-		myJson.push({
-			
-			"type": $(this).attr("fieldType"),
+			$(this).isChecked = false;
+		} */
+	    
+	 
+	/* 	myJson.push({
+			"checkstatus": checkstatus,
+			"type": type,
 			"name": $(this).attr("name"),
-			"value": input
+			"value": input`
 			
-		});		
+		}); */		
 	});
 
 	$.ajax({
@@ -193,7 +190,7 @@ function GetText() {
 		
 		contentType : 'application/json; charset=utf-8',
 		success:function(data){
-			
+			console.log("success!");
 			alert("123!");
 		}
 	});

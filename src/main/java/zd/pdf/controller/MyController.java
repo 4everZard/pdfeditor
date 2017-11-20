@@ -66,18 +66,31 @@ public class MyController<PdfField, PdfIterator>  {
 		PdfStamper stamper = new PdfStamper(reader,new FileOutputStream(fileClass.destPdf));
     	AcroFields fields = stamper.getAcroFields();
     
-		
+    	System.out.println(fieldData.length);
     	for(int i=0;i<fieldData.length;i++) {
     		
     			String value = fieldData[i].getValue();
+    			
     			String name = fieldData[i].getName();
-    			int type = fieldData[i].getFieldType();
-    			if(value != null && (type ==4 || type == 2)) {
+    			
+    			String checkstatus = fieldData[i].getIsChecked();
+    			
+    			int type = fieldData[i].getFieldType();   		
+    			System.out.println("value is:"+value+" "+"name is: "+name+" "+" check status is: "+ checkstatus +" type is: "+type);
+    			
+    			
+    			if(value != null && (type ==4 || type == 7)) {
 	    			fields.setField(name,value);
 	    			stamper.setFormFlattening(true);
+	    			
 	    		}
-    			System.out.println(value);
-    			System.out.println(name);
+    			else if(type == 2 && checkstatus == "1") {
+    				String[] checkboxstates = fields.getAppearanceStates(name);
+    				fields.setField(name, checkboxstates[1]);
+   
+    			}
+    		/*	System.out.println(value);
+    			System.out.println(name);*/
     		
     	}
     	stamper.close();

@@ -44,7 +44,7 @@ public class FieldData{
 	String fieldName;
 	int fieldType;
 	int size;                   // number of elements in the datafield 
-	boolean isChecked;
+	String isChecked;
 
 	/*public String getText() {
 		return text;
@@ -75,7 +75,7 @@ public class FieldData{
 		this.positions = positions; 
 	}
 	
-	public boolean getIsChecked(){
+	public String getIsChecked(){
 		return isChecked;
 	}
 	@Override

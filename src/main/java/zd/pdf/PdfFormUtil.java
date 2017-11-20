@@ -15,11 +15,7 @@ import com.itextpdf.text.pdf.PdfReader;
 import zd.pdf.FieldData.position;
 
 public class PdfFormUtil<PdfField> {
-	
-   // public static final String SRC = "/home/developer/Downloads/PDFform.pdf";    // set location for source pdf 
-   // public static final String DEST = "/home/developer/Downloads/example.pdf";   // set location for destination pdf
-    
-    
+
     // In main function, open DEST and call manipulatePdf function.
     public static void main(String[] args) throws IOException, DocumentException {    
         File file = new File(fileClass.sourcePdf);
@@ -45,13 +41,8 @@ public class PdfFormUtil<PdfField> {
     	
     	FieldData[] FieldData = new FieldData[fieldNums];
     	for(int x=0;x<fldNames.size();x++) {
-    	
     			FieldData[x] = new FieldData();
-    		
     	}
-    	
-    	
- 
     	fieldNums = 0;
     	for (String fldName : fldNames) {
     		  fieldNums++;
@@ -60,26 +51,32 @@ public class PdfFormUtil<PdfField> {
     		  List<FieldPosition> positions = fields.getFieldPositions(fldName);  
     		/* FieldData[fieldNums][5] = new FieldData();*/
     		  //FieldData[fieldNums][0].size = positions.size();
-    		  System.out.println(positions.size());
+    		  //System.out.println(positions.size());
     		  int size = positions.size();
     		  //System.out.println(size);
     		  Rectangle[] rect = new Rectangle[size];
     		  
+    		 
+			  
     		  
     		  FieldData[fieldNums-1].size = size;
     		  FieldData[fieldNums-1].value ="";             
 			  FieldData[fieldNums-1].name = fldName;
 			  FieldData[fieldNums-1].fieldType = fields.getFieldType(fldName);   	        	      
-			  FieldData[fieldNums-1].fieldName =""; 
-			  FieldData[fieldNums-1].isChecked=false;
+			  
+			  if(FieldData[fieldNums-1].fieldType == 2) {
+				  String[] checkboxstates = fields.getAppearanceStates(fldName); 
+				  //FieldData[fieldNums-1].isChecked= checkboxstates[0];
+				  System.out.println(fldName+"    "+checkboxstates[1]);
+			  }
+		
 			  FieldData[fieldNums-1].positions = new position[14];
 			  for(int i=0;i<14;i++) {
 				  FieldData[fieldNums-1].positions[i] = new position();
 			  }
 			  for (int j=0;j<size;j++) {
-    	    		  System.out.println("fieldNums is: "+fieldNums);
+    	    		  //System.out.println("fieldNums is: "+fieldNums);
 
-    	    		 
     				  rect[j] = positions.get(j).position;
     				  int page = positions.get(0).page;
         			 
