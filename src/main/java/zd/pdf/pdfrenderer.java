@@ -19,7 +19,7 @@ import com.sun.pdfview.PDFPage;
 public class pdfrenderer {
     public static void PdfConverter(String source, String destination) throws InvalidPasswordException, IOException{
         try {
-//        String sourceDir = "/home/developer/eclipse-workspace/pdfeditor/src/main/resources/pdfForm.pdf";// PDF file must be placed in DataGet folder
+//        String sourceDir = "/home/developer/eclipse-workspace/pdfeditor/src/main/resource/pdfForm.pdf";// PDF file must be placed in DataGet folder
 //        String destinationDir = "/home/developer/eclipse-workspace/pdfeditor/src/main/resources/";//Converted PDF page saved in this folder
 
         File sourceFile = new File(fileClass.sourcePdf);

@@ -41,10 +41,10 @@ public class FieldData{
 	String name;
 	//String text;
 	String value;               // text in the textfield
-	String fieldName;
+	
 	int fieldType;
 	int size;                   // number of elements in the datafield 
-	String isChecked;
+	boolean checkStatus;
 
 	/*public String getText() {
 		return text;
@@ -52,14 +52,8 @@ public class FieldData{
 	public String getValue() {
 		return value;
 	}
-	public int getFieldType() {
-		return fieldType;
-	}
-	// 2 represents for checkbox; 4 represents for text field; 7 represents for signature field
-	public String getFieldName() {
-		return fieldName;
-	}
 	
+	// 2 represents for checkbox; 4 represents for text field; 7 represents for signature field
 	public int getSize() {
 		return size;
 	}
@@ -75,9 +69,23 @@ public class FieldData{
 		this.positions = positions; 
 	}
 	
-	public String getIsChecked(){
-		return isChecked;
+	public int getFieldType() {
+		return fieldType;
 	}
+	public void setFieldType(int fieldType) {
+		this.fieldType = fieldType;
+		
+	}
+	
+	public boolean getCheckStatus(){
+		return checkStatus;
+	}
+	public void setCheckStatus(boolean checkStatus) {
+		this.checkStatus = checkStatus;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

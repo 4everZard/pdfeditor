@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -73,18 +74,19 @@ public class MyController<PdfField, PdfIterator>  {
     			
     			String name = fieldData[i].getName();
     			
-    			String checkstatus = fieldData[i].getIsChecked();
     			
-    			int type = fieldData[i].getFieldType();   		
-    			System.out.println("value is:"+value+" "+"name is: "+name+" "+" check status is: "+ checkstatus +" type is: "+type);
+    			boolean checkStatus = fieldData[i].getCheckStatus();
+    			
+    			int fieldType = fieldData[i].getFieldType();
+    			System.out.println("value is:"+value+" "+"name is: "+name+" "+" check status is: "+ checkStatus +" type is: "+fieldType);
     			
     			
-    			if(value != null && (type ==4 || type == 7)) {
+    			if(value != null && (fieldType ==4 || fieldType == 7)) {
 	    			fields.setField(name,value);
 	    			stamper.setFormFlattening(true);
 	    			
 	    		}
-    			else if(type == 2 && checkstatus == "1") {
+    			else if(fieldType == 2 && checkStatus == true) {
     				String[] checkboxstates = fields.getAppearanceStates(name);
     				fields.setField(name, checkboxstates[1]);
    

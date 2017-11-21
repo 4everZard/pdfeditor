@@ -148,17 +148,17 @@ $(document).ready(function(){
 
 function GetText() {
 
-	
+	 var myJson = [];
 	 $(".inputfield").each(function () {
 		  var data = new Object();
 		  data["name"] = $(this).attr("name");
-		  data["type"] = $(this).attr("fieldType");
+		  data["fieldType"] = $(this).attr("fieldType");
 		  data["value"] = $(this).val();
-		  data["checkstatus"] = $(this).prop("checked");
+		  data["checkStatus"] = $(this).prop("checked");
 		  myJson.push(data);
 		/* 
 		var input;
-		var myJson = [];
+		
 		var type;
 		var checkstatus;
 		input = $(this).val();

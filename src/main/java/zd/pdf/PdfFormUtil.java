@@ -62,13 +62,14 @@ public class PdfFormUtil<PdfField> {
     		  FieldData[fieldNums-1].size = size;
     		  FieldData[fieldNums-1].value ="";             
 			  FieldData[fieldNums-1].name = fldName;
-			  FieldData[fieldNums-1].fieldType = fields.getFieldType(fldName);   	        	      
+			  FieldData[fieldNums-1].fieldType = fields.getFieldType(fldName);   
 			  
-			  if(FieldData[fieldNums-1].fieldType == 2) {
+			  FieldData[fieldNums-1].checkStatus = true;
+			 /* if(FieldData[fieldNums-1].fieldType == 2) {
 				  String[] checkboxstates = fields.getAppearanceStates(fldName); 
 				  //FieldData[fieldNums-1].isChecked= checkboxstates[0];
-				  System.out.println(fldName+"    "+checkboxstates[1]);
-			  }
+				  System.out.println(fldName+"    "+checkboxstates[0]);
+			  }*/
 		
 			  FieldData[fieldNums-1].positions = new position[14];
 			  for(int i=0;i<14;i++) {
