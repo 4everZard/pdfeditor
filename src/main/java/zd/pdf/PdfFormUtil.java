@@ -11,6 +11,7 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.AcroFields.FieldPosition;
 import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.StringUtils;
 
 import zd.pdf.FieldData.position;
 
@@ -25,7 +26,7 @@ public class PdfFormUtil<PdfField> {
     }
   
     
-    public static  FieldData[] PdfIterator(String dest) throws IOException {
+    public static  FieldData[] PdfIterator(String dest) throws IOException, DocumentException {
     	String DEST = dest;
     	PdfReader reader = new PdfReader(DEST);
     	AcroFields fields = reader.getAcroFields();
@@ -65,11 +66,16 @@ public class PdfFormUtil<PdfField> {
 			  FieldData[fieldNums-1].fieldType = fields.getFieldType(fldName);   
 			  
 			  FieldData[fieldNums-1].checkStatus = true;
-			 /* if(FieldData[fieldNums-1].fieldType == 2) {
-				  String[] checkboxstates = fields.getAppearanceStates(fldName); 
+			  
+			  //String value = fields.getField(fldName);
+			  if(FieldData[fieldNums-1].fieldType == 2) {
+				  String value = fields.getField(fldName);
+				  //String[] checkboxstates = fields.getAppearanceStates(fldName); 
+				  //fields.setField(fldName, );
 				  //FieldData[fieldNums-1].isChecked= checkboxstates[0];
-				  System.out.println(fldName+"    "+checkboxstates[0]);
-			  }*/
+				  
+				 // System.out.println("Checkbox: "+ fldName + "Value: "+value +"   "+ "AvailableValues: "+  Arrays.toString(checkboxstates));
+			  }
 		
 			  FieldData[fieldNums-1].positions = new position[14];
 			  for(int i=0;i<14;i++) {

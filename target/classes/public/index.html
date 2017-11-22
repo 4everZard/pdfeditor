@@ -109,7 +109,7 @@ $(document).ready(function(){
 						 		left:imgFieldX						 		
 						 	});						
 					 	 }		 
-					   	  else if(size > 1 && type ==2){
+					   	  else if(type ==2){
 					   		for(var j=0;j<size;j++){
 					   		 	imgFieldX = offsetX + data[i].positions[j].xpercent*imgWidth;
 							 	//console.log(imgFieldX);
@@ -120,7 +120,7 @@ $(document).ready(function(){
 								
 								 imgFieldHeight = imgHeight * data[i].positions[j].heightPercent;
 					  								
-								var x = $('<input class="inputfield" type="checkbox" isChecked ="' + data[i].isChecked + '" fieldType ="' + data[i].fieldType + '" name ="' + data[i].name + '"  value ="' + data[i].value + '" />');
+								var x = $('<input class="inputfield" type="checkbox" isChecked ="' + data[i].isChecked + '" fieldType ="' + data[i].fieldType + '" name ="' + data[i].name + '"  value ="' + j + '" />');
 						 		$(wrapper).append(x);						 	
 						 		x.css({
 						 			width:imgFieldWidth,
@@ -155,31 +155,7 @@ function GetText() {
 		  data["fieldType"] = $(this).attr("fieldType");
 		  data["value"] = $(this).val();
 		  data["checkStatus"] = $(this).prop("checked");
-		  myJson.push(data);
-		/* 
-		var input;
-		
-		var type;
-		var checkstatus;
-		input = $(this).val();
-		type = $(this).attr("fieldType");
-		checkstatus = $(this).prop("checked");
-	 	console.log(type);
-	    if($(this).prop('checked') == true){
-			$(this).isChecked = true;
-		}
-		else if($(this).prop('checked') == false){
-			$(this).isChecked = false;
-		} */
-	    
-	 
-	/* 	myJson.push({
-			"checkstatus": checkstatus,
-			"type": type,
-			"name": $(this).attr("name"),
-			"value": input`
-			
-		}); */		
+		  myJson.push(data);	
 	});
 
 	$.ajax({

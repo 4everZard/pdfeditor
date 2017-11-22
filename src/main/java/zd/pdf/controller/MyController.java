@@ -52,7 +52,7 @@ public class MyController<PdfField, PdfIterator>  {
 
 	@RequestMapping(value = "/pdf/fields", method = RequestMethod.GET)
 
-	public @ResponseBody FieldData[] getCoordinates(HttpServletResponse response) throws IOException{
+	public @ResponseBody FieldData[] getCoordinates(HttpServletResponse response) throws IOException, DocumentException{
 		return PdfFormUtil.PdfIterator("/home/developer/eclipse-workspace/pdfeditor/src/main/resources/pdfForm.pdf");
 	}
 	
@@ -72,13 +72,14 @@ public class MyController<PdfField, PdfIterator>  {
     		
     			String value = fieldData[i].getValue();
     			
+    			 
     			String name = fieldData[i].getName();
     			
     			
     			boolean checkStatus = fieldData[i].getCheckStatus();
     			
     			int fieldType = fieldData[i].getFieldType();
-    			System.out.println("value is:"+value+" "+"name is: "+name+" "+" check status is: "+ checkStatus +" type is: "+fieldType);
+    			//System.out.println("value is:"+value+" "+"name is: "+name+" "+" check status is: "+ checkStatus +" type is: "+fieldType);
     			
     			
     			if(value != null && (fieldType ==4 || fieldType == 7)) {
@@ -86,16 +87,46 @@ public class MyController<PdfField, PdfIterator>  {
 	    			stamper.setFormFlattening(true);
 	    			
 	    		}
-    			else if(fieldType == 2 && checkStatus == true) {
-    				String[] checkboxstates = fields.getAppearanceStates(name);
-    				fields.setField(name, checkboxstates[1]);
-   
+    			else if (fieldType == 2 && checkStatus == true && value == "0") {
+    				
+    				fields.setField(name, value);
+    				stamper.setFormFlattening(true);
     			}
-    		/*	System.out.println(value);
-    			System.out.println(name);*/
+    			else if(fieldType == 2 && checkStatus == true) {
+    				String index = Integer.toString(Integer.parseInt(value) + 1);
+    				System.out.println(name +"   " + index);
+    				//String checkboxstates = fields.getField(name);
+    				//System.out.println(checkboxstates);
+    				String status[] = fields.getAppearanceStates(name);
+    				/*System.out.println(name + "  "+ status[0]+"  "+status[1]);
+    				System.out.println(checkStatus);*/
+    				
+    				fields.setField(name, index);
+    				//fields.setField(name, status[0]);
+    				System.out.println(Arrays.toString(status));
+    				stamper.setFormFlattening(true);
+    				
+    			}
+    			/*else if(fieldType == 2 && checkStatus == false) {
+    				String checkboxstates = fields.getField(name);
+    				//System.out.println(checkboxstates);
+    				String[] status = fields.getAppearanceStates(name);
+    				fields.setField(name, "off");
+    				stamper.setFormFlattening(true);
+    			}*/
+    			
+    			/*else if( fieldType == 2 && checkStatus == true && name == "appa.currentAddress.type") {
+    				String[] status = fields.getAppearanceStates(name);
+    				fields.setField(name, "2");
+    			}*/
+    	
     		
     	}
     	stamper.close();
     	reader.close();
 	}
 }
+
+
+
+
