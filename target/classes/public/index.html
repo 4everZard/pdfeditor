@@ -80,7 +80,10 @@ $(document).ready(function(){
 				  imgHeight = img.height;
 				  imgWidth = img.width;
 				  
+				  
+				  
 				 $.get("/pdf/fields", function(data){
+					 
 					 console.log(data);
 					 for(var i=0;i<data.length;i++){
 						 
@@ -132,6 +135,17 @@ $(document).ready(function(){
 					   		}
 					 	}    
 					} 
+					 $("input:checkbox").on('click', function() {
+						  var $box = $(this);
+						  if ($box.is(":checked")) {
+						    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+						    $(group).prop("checked", false);
+						    $box.prop("checked", true);
+						  } 
+						  else {
+							  $box.prop("checked", false);
+						  }
+						});
 
 			      });
 			});
@@ -158,6 +172,9 @@ function GetText() {
 		  myJson.push(data);	
 	});
 
+	 
+	
+
 	$.ajax({
 		url:"/pdf/fields",
 		type:"POST",
@@ -172,5 +189,41 @@ function GetText() {
 	});
 	
 }
+
+//
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 </html>
