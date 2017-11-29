@@ -1,24 +1,23 @@
 package zd.pdf;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.catalina.core.ApplicationContext;
 import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
-import org.springframework.beans.factory.ListableBeanFactory;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Application {
 
 	public static void main(String[] args) throws InvalidPasswordException, IOException {
-		pdfrenderer.PdfConverter(fileClass.sourcePdf,fileClass.destinationImg);	
+		// convert the source pdf to a image using PdfRenderer
+		PdfRenderer.PdfConverter(FileClass.sourcePdf,FileClass.destinationImg);	
         SpringApplication.run(Application.class, args);
     }
-
+	
+	
 }
 	
+
+
+
+
